@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>AOC 2015: Santa\'s Path Visualizer</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class="canvas-container">
+                <canvas id="tutorial" height="150" width="150">
+                </canvas>
+            </div>
+
+            <div id="controls">
+                <select name="pattern" id="patternSelector">
+                    <option value="red-blue-square">Red and blue square</option>
+                    <option value="black-stoked-square">Black stroked square</option>
+                    <option value="checkerboard">Checkerboard</option>
+                    <option value="smiley">Smile face</option>
+                    <option value="triangles" selected>Trianges</option>
+                </select>
+                <a href="#" id="btnDownload">Download Image</a>
+            </div>
+        </div>
+
+        <script src="scripts.js"></script>
+    </body>
+</html>
