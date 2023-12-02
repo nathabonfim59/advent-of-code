@@ -74,6 +74,7 @@ func parseGame(line string) (game Game) {
 	return game
 }
 
+// SAMPLE: " 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
 func parseSets(results string) (sets []Set) {
 	setsRaw := strings.Split(results, ";")
 
@@ -87,6 +88,7 @@ func parseSets(results string) (sets []Set) {
 	return sets
 }
 
+// SAMPLE: " 1 red, 2 green, 6 blue"
 func parseCubes(setRaw string) (cubes []Cube) {
 	set := strings.TrimSpace(setRaw)
 	cubesRaw := strings.Split(set, ",")
@@ -99,6 +101,7 @@ func parseCubes(setRaw string) (cubes []Cube) {
 	return cubes
 }
 
+// SAMPLE: " 6 blue"
 func parseCube(cube string) Cube {
 	cubeRaw := strings.TrimSpace(cube)
 	cubeInfo := strings.Split(cubeRaw, " ")
