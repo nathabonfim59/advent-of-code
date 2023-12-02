@@ -7,7 +7,7 @@ import (
 	"github.com/nathabonfim59/advent-of-code/go/2023/lib"
 )
 
-func main() {
+func main1() {
     file, _ := lib.OpenFile("input.data")
     var documentSum, lineCalibration int
     var firstNumber, lastNumber rune
@@ -19,7 +19,7 @@ func main() {
             break
         }
 
-        firstNumber, lastNumber = findCalibrationValues(line)
+        firstNumber, lastNumber = findCalibrationValues1(line)
         lineSequence = string(firstNumber) + string(lastNumber)
         lineCalibration, _ = strconv.Atoi(lineSequence)
 
@@ -35,7 +35,7 @@ func main() {
 // The calibration values are the first and last numbers
 // NOTE: if there are just one number, the first and last
 //       are the same
-func findCalibrationValues(line string) (rune, rune) {
+func findCalibrationValues1(line string) (rune, rune) {
     var firstNumber, lastNumber rune
     var isInteger bool
 
