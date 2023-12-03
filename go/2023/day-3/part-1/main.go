@@ -50,7 +50,6 @@ func main() {
 
 		previousSchematic = currentSchematic
 		currentSchematic = parseSchematic(line, lineNumber)
-		// fmt.Printf("currentSchematic: %v\n", currentSchematic)
 
 		result = result + sumAdjacentNumbers(currentSchematic, previousSchematic)
 
@@ -64,25 +63,31 @@ func parseSchematic(content string, lineNumber int) (schematic SchematicLine) {
 	var numbers []Number
 	var numberSequence []rune
 	var numberPositions []Position
-	var wasLastCharNumber bool = false
+	var wasPreviousCharNumber bool = false
+	var isLastChar bool = false
+	var saveSequence bool = false
 
 	var symbols []Symbol
 
 	for column, char := range content {
-
+		isLastChar = column == len(content)-1
 		isNumber := char >= 48 && char <= 57
+
 		if isNumber {
 			numberSequence = append(numberSequence, char)
 			numberPositions = append(numberPositions, Position{lineNumber, column})
 
-			wasLastCharNumber = true
+			wasPreviousCharNumber = true
 		}
 
-		if !isNumber && wasLastCharNumber {
+		saveSequence = (isLastChar && isNumber) || // trailing number
+			(!isNumber && wasPreviousCharNumber) // number continues
+
+		if saveSequence {
 			number, _ := strconv.Atoi(string(numberSequence))
 			numbers = append(numbers, Number{number, numberPositions})
 
-			wasLastCharNumber = false
+			wasPreviousCharNumber = false
 			numberSequence = []rune{}
 			numberPositions = []Position{}
 		}
@@ -201,8 +206,8 @@ func sumNumbers(numbers []Number) (result int) {
 
 func isNumberInList(number Number, list []Number) bool {
 	for _, n := range list {
-        isSameValue := n.Value == number.Value
-        isSamePosition := reflect.DeepEqual(n.Positions, number.Positions)
+		isSameValue := n.Value == number.Value
+		isSamePosition := reflect.DeepEqual(n.Positions, number.Positions)
 
 		if isSameValue && isSamePosition {
 			return true
@@ -211,13 +216,12 @@ func isNumberInList(number Number, list []Number) bool {
 	return false
 }
 
-
 func removeDuplicatedNumbers(numbers *[]Number) {
-    var result []Number
-    for _, number := range *numbers {
-        if !isNumberInList(number, result) {
-            result = append(result, number)
-        }
-    }
-    *numbers = result
+	var result []Number
+	for _, number := range *numbers {
+		if !isNumberInList(number, result) {
+			result = append(result, number)
+		}
+	}
+	*numbers = result
 }
