@@ -50,6 +50,17 @@ func calculateSurfaceArea(box Dimensions) int {
 	return 2*(top+front+left) + smallestSide
 }
 
+func calculateRibbonLength(box Dimensions) int {
+	totalSides := (box.width + box.height + box.length)
+	highestSize := max(box.width, box.height, box.length)
+
+	smallestPerimeter := 2 * (totalSides - highestSize)
+
+	cubic := box.width * box.height * box.length
+
+	return smallestPerimeter + cubic
+}
+
 func Part1() {
 	file, _ := os.Open(filename)
 	reader := bufio.NewReader(file)
@@ -63,12 +74,32 @@ func Part1() {
 		}
 
 		boxDimensions := extractDimensions(line)
-		totalArea = totalArea + calculateSurfaceArea(boxDimensions)
+		totalArea += calculateSurfaceArea(boxDimensions)
 	}
 
-	fmt.Println("Total area: ", totalArea)
+	fmt.Println("Part 1 => Total area: ", totalArea)
+}
+
+func Part2() {
+	file, _ := os.Open(filename)
+	reader := bufio.NewReader(file)
+
+	totalArea := 0
+
+	for {
+		line := readLine(reader)
+		if line == "" {
+			break
+		}
+
+		boxDimensions := extractDimensions(line)
+		totalArea += calculateRibbonLength(boxDimensions)
+	}
+
+	fmt.Println("Part 2 => Ribbon size: ", totalArea)
 }
 
 func main() {
 	Part1()
+	Part2()
 }
