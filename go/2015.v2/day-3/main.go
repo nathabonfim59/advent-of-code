@@ -90,6 +90,55 @@ func Part1() {
 	fmt.Println("Part 1 => Unique locations:", uniqueLocations)
 }
 
+func Part2() {
+	file, _ := os.Open(filename)
+	reader := bufio.NewReader(file)
+
+	robotLocation := Coordinate{0, 0}
+	santaLocation := Coordinate{0, 0}
+
+	robotsTurn := false
+
+	visitedHouses := []Coordinate{}
+
+	visitedHouses = append(visitedHouses, Coordinate{0, 0})
+
+	for {
+		char := readChar(reader)
+		if char == 0 {
+			break
+		}
+
+		var currentLocation Coordinate
+
+		if robotsTurn {
+			currentLocation = robotLocation
+		} else {
+			currentLocation = santaLocation
+		}
+
+		movement := parseInstruction(char)
+		currentLocation = moveTo(currentLocation, movement)
+
+		if robotsTurn {
+			robotLocation = currentLocation
+		} else {
+			santaLocation = currentLocation
+		}
+
+		robotsTurn = !robotsTurn
+
+		// Adds to the unique list
+		if hasVisitedBefore(visitedHouses, currentLocation) {
+			continue
+		}
+
+		visitedHouses = append(visitedHouses, currentLocation)
+	}
+
+	fmt.Println("Part 2 => Recieved at least one gift:", len(visitedHouses))
+}
+
 func main() {
-	Part1()
+	Part2()
 }
