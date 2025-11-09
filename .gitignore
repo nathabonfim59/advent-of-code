@@ -2,3 +2,6 @@ build/
 
 .history
 go/2015/day-3/visualizer/node_modules
+c/2015/lib/libdebug.a
+c/2015/lib/libfile.a
+c/2015/lib/text.o
